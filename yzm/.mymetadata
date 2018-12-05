@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project-module
+  type="WEB"
+  name="yzm"
+  id="myeclipse.1521008198618"
+  context-root="/yzm"
+  j2ee-spec="5.0"
+  archive="yzm.war">
+  <attributes>
+    <attribute name="webrootdir" value="WebRoot" />
+  </attributes>
+</project-module>
+
