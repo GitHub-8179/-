@@ -1,6 +1,0 @@
-<?xml version="1.0" encoding="ASCII"?>
-<cache:CacheIndex xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:cache="http://eclipse.org/dltk/cache_model" environment="org.eclipse.dltk.core.environment.localEnvironment">
-  <entries path="E:/project/myEclipse-workspace/yzm/WebRoot/js/jquery-1.11.1.js" timestamp="1521009597664" lastAccessTime="1521097178380"/>
-  <entries path="E:/project/myEclipse-workspace/strust/WebRoot/WEB-INF/classes/WebRoot/js/jquery-1.11.1.js" timestamp="1521009597664" lastAccessTime="1521096582882"/>
-  <entries path="E:/project/myEclipse-workspace/strust/WebRoot/WEB-INF/classes/js/jquery-1.11.1.js" timestamp="1521009597664" lastAccessTime="1521097178696"/>
-</cache:CacheIndex>

@@ -1,4 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<session version="1.0">
-<refactoring comment="Rename type &apos;com.sjc.QRCode&apos; to &apos;CreateQRCode&apos;&#x0D;&#x0A;- Original project: &apos;qrCode&apos;&#x0D;&#x0A;- Original element: &apos;com.sjc.QRCode&apos;&#x0D;&#x0A;- Renamed element: &apos;com.sjc.CreateQRCode&apos;&#x0D;&#x0A;- Update references to refactored element&#x0D;&#x0A;- Update textual occurrences in comments and strings" description="Rename type &apos;QRCode&apos;" flags="589830" id="org.eclipse.jdt.ui.rename.type" input="/src&lt;com.sjc{QRCode.java[QRCode" matchStrategy="1" name="CreateQRCode" qualified="false" references="true" similarDeclarations="false" stamp="1522231438698" textual="false" version="1.0"/>
-</session>

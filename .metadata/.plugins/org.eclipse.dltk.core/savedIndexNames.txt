@@ -1,2 +1,0 @@
-E:\project\myEclipse-workspace\.metadata\.plugins\org.eclipse.dltk.core\1692843826.index
-E:\project\myEclipse-workspace\.metadata\.plugins\org.eclipse.dltk.core\3842765527.index
