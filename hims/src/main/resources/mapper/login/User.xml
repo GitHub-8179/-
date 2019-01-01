@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="com.hims.login.dao.ILoginUserDao" >
+
+    <resultMap id="UserMap" type="com.hims.login.bean.User" >
+    <id column="id" property="id" jdbcType="VARCHAR" />
+    <result column="code" property="code" jdbcType="VARCHAR" />
+    <result column="name" property="name" jdbcType="VARCHAR" />
+    <result column="effect_Time" property="effectTime" jdbcType="VARCHAR" />
+    <result column="fail_Time" property="failTime" jdbcType="VARCHAR" />
+    <result column="is_Valid" property="isValid" jdbcType="VARCHAR" />
+    <result column="gender" property="gender" jdbcType="VARCHAR" />
+    <result column="phone" property="phone" jdbcType="VARCHAR" />
+    <result column="email" property="email" jdbcType="VARCHAR" />
+    <result column="department" property="department" jdbcType="VARCHAR" />
+    <result column="voucher" property="voucher" jdbcType="VARCHAR" />
+    <result column="account" property="account" jdbcType="VARCHAR" />
+  </resultMap>
+  
+    <select id="loginVerify" parameterType="string" resultMap="UserMap" >
+		select * from s_user_inof where NAME=#{user} and PASSWORD=#{pass}
+	</select>
+	
+ <!--  <insert id="insertSelective" parameterType="com.hims.login.bean.User" >
+    insert into adminuser
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="username != null" >
+        username,
+      </if>
+      <if test="password != null" >
+        password,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="username != null" >
+        #{username,jdbcType=VARCHAR},
+      </if>
+      <if test="password != null" >
+        #{password,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  
+  <update id="updateByPrimaryKeySelective" parameterType="com.hims.login.bean.User" >
+    update adminuser
+    <set >
+      <if test="username != null" >
+        username = #{username,jdbcType=VARCHAR},
+      </if>
+      <if test="password != null" >
+        password = #{password,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id}
+  </update>
+  
+  <update id="updateByPrimaryKey" parameterType="com.hims.login.bean.User" >
+    update adminuser
+    set username = #{username,jdbcType=VARCHAR},
+      password = #{password,jdbcType=VARCHAR}
+    where id = #{id}
+  </update>
+  
+  <select id="selUser" resultMap="UserMap">
+  	SELECT * FROM s_user_inof
+  </select>
+  
+   <update id="update" parameterType="com.hims.login.bean.User" >
+    update s_user_inof
+    <set>
+     <if test="user.name != null" >
+       NAME = #{user.name,jdbcType=VARCHAR},
+      </if>
+      <if test="user.passWord != null" >
+    	PASSWORD = #{user.passWord,jdbcType=VARCHAR},
+      </if>
+      <if test="user.department != null" >
+    	department = #{user.department,jdbcType=VARCHAR},
+      </if>
+      <if test="user.voucher != null" >
+    	voucher =#{user.voucher,jdbcType=VARCHAR},
+      </if>
+      <if test="user.account != null" >
+      	account = #{user.account,jdbcType=VARCHAR},
+      </if>
+		IS_VALID='1'
+    </set>
+    where id = #{user.id}
+  </update>
+  
+  
+    <insert id="insert" parameterType="com.hims.login.bean.User" useGeneratedKeys="true"
+    keyProperty="id">
+     insert into s_user_inof 
+     (NAME ,PASSWORD ,EFFECT_TIME,FAIL_TIME,IS_VALID,gender,phone,email ,department)
+    values 
+    ( #{name,jdbcType=VARCHAR}, #{passWord,jdbcType=VARCHAR}, 
+      #{effectTime,jdbcType=VARCHAR}, #{failTime,jdbcType=VARCHAR}, 
+      #{isValid,jdbcType=VARCHAR},#{gender,jdbcType=VARCHAR},
+      #{phone,jdbcType=VARCHAR}, #{email,jdbcType=VARCHAR}, 
+      #{department,jdbcType=VARCHAR})
+  </insert>
+  <select id="login" parameterType="string" resultMap="UserMap" >
+		select * from s_user_inof where NAME=#{user} and PASSWORD=#{pass}
+	</select>
+	
+	  <delete id="delete" parameterType="list" >
+    delete from s_user_inof
+    <where> 
+    	id in 
+	    <foreach collection="ids" item="id" index="index" separator="," open="(" close=")">  
+	        #{id} 
+	    </foreach> 
+     </where>
+  </delete> -->
+</mapper>
