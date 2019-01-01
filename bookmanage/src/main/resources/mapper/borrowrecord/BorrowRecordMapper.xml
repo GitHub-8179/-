@@ -1,0 +1,264 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.book.borrowrecord.dao.BorrowRecordMapper">
+  <resultMap id="BaseResultMap" type="com.book.borrowrecord.bean.BorrowRecord">
+    <id column="Book_ID" jdbcType="INTEGER" property="bookId" />
+    <result column="card_ID" jdbcType="INTEGER" property="cardId" />
+    <result column="data" jdbcType="DATE" property="data" />
+    <result column="admin_ID" jdbcType="INTEGER" property="adminId" />
+    <result column="record_type" jdbcType="VARCHAR" property="recordType" />
+    <result column="admin_Name" jdbcType="VARCHAR" property="adminName" />
+    <result column="user_Name" jdbcType="VARCHAR" property="userName" />
+    <result column="book_Name" jdbcType="VARCHAR" property="bookName" />
+    <result column="book_code" jdbcType="VARCHAR" property="bookCode" />
+    
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    Book_ID, card_ID, data, admin_ID, record_type
+  </sql>
+  <select id="selectByExample" parameterType="com.book.borrowrecord.bean.BorrowRecordExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from p_borrow_record
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from p_borrow_record
+    where Book_ID = #{bookId,jdbcType=INTEGER}
+  </select>
+  
+    <select id="selectInfo" parameterType="map" resultMap="BaseResultMap">
+    SELECT 
+	d.admin_ID,d.Book_ID,d.card_ID,d.data,d.record_type, a.NAME admin_Name,b.Username user_Name,c.book_name book_Name,c.code book_code
+	FROM   p_borrow_record d LEFT OUTER JOIN s_admin_inof a ON d.admin_id=a.admin_id 
+	LEFT OUTER JOIN	 p_library_card b ON d.card_ID=b.card_ID 
+	LEFT OUTER JOIN	 p_book_info c ON d.book_id=c.Book_ID
+	<where>
+	<if test="record.cardId != null and record.cardId != ''" >
+    	and d.card_Id = #{record.cardId,jdbcType=VARCHAR}
+      </if>
+      
+		<if test="record.recordType != null and record.recordType != ''" >
+    	and d.record_type = #{record.recordType,jdbcType=VARCHAR}
+      </if>
+      	<if test="record.adminName != null and record.adminName != ''" >
+    	and a.NAME like  CONCAT(#{record.adminName,jdbcType=VARCHAR},'%') 
+      </if>
+      	<if test="record.userName != null and record.userName != ''" >
+    	and b.Username = #{record.userName,jdbcType=VARCHAR}
+      </if>
+      	<if test="record.bookName != null and record.bookName != ''" >
+    	and c.book_name = #{record.bookName,jdbcType=VARCHAR}
+      </if>
+      
+      	<if test="startTime != null and startTime != ''" >
+    	and d.data= #{startTime}
+      </if>
+      
+      <!--  <if test="startTime != null and startTime != ''" >
+    	d.data <![CDATA[ >= ]]> #{startTime,jdbcType=VARCHAR},
+      </if>
+       <if test="endTime != null  and endTime != ''" >
+    	d.data <![CDATA[ <= ]]> #{endTime,jdbcType=VARCHAR},
+      </if> -->
+	</where>
+  </select>
+  
+  
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from p_borrow_record
+    where Book_ID = #{bookId,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.book.borrowrecord.bean.BorrowRecordExample">
+    delete from p_borrow_record
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.book.borrowrecord.bean.BorrowRecord">
+    insert into p_borrow_record (Book_ID, card_ID, data, 
+      admin_ID, record_type)
+    values (#{bookId,jdbcType=INTEGER}, #{cardId,jdbcType=INTEGER}, #{data,jdbcType=DATE}, 
+      #{adminId,jdbcType=INTEGER}, #{recordType,jdbcType=VARCHAR})
+  </insert>
+  
+    <insert id="insertInfo" parameterType="com.book.borrowrecord.bean.BorrowRecord">
+    insert into p_borrow_record (Book_ID, card_ID, data, 
+      admin_ID, record_type)
+    values ( (SELECT a.book_id FROM p_book_info a  where a.code = #{bookName,jdbcType=VARCHAR}),
+     #{cardId,jdbcType=INTEGER}, #{data,jdbcType=DATE}, 
+      #{adminId,jdbcType=INTEGER}, #{recordType,jdbcType=VARCHAR})
+  </insert>
+  
+  <insert id="insertSelective" parameterType="com.book.borrowrecord.bean.BorrowRecord">
+    insert into p_borrow_record
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="bookId != null">
+        Book_ID,
+      </if>
+      <if test="cardId != null">
+        card_ID,
+      </if>
+      <if test="data != null">
+        data,
+      </if>
+      <if test="adminId != null">
+        admin_ID,
+      </if>
+      <if test="recordType != null">
+        record_type,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="bookId != null">
+        #{bookId,jdbcType=INTEGER},
+      </if>
+      <if test="cardId != null">
+        #{cardId,jdbcType=INTEGER},
+      </if>
+      <if test="data != null">
+        #{data,jdbcType=DATE},
+      </if>
+      <if test="adminId != null">
+        #{adminId,jdbcType=INTEGER},
+      </if>
+      <if test="recordType != null">
+        #{recordType,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.book.borrowrecord.bean.BorrowRecordExample" resultType="java.lang.Long">
+    select count(*) from p_borrow_record
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update p_borrow_record
+    <set>
+      <if test="record.bookId != null">
+        Book_ID = #{record.bookId,jdbcType=INTEGER},
+      </if>
+      <if test="record.cardId != null">
+        card_ID = #{record.cardId,jdbcType=INTEGER},
+      </if>
+      <if test="record.data != null">
+        data = #{record.data,jdbcType=DATE},
+      </if>
+      <if test="record.adminId != null">
+        admin_ID = #{record.adminId,jdbcType=INTEGER},
+      </if>
+      <if test="record.recordType != null">
+        record_type = #{record.recordType,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update p_borrow_record
+    set Book_ID = #{record.bookId,jdbcType=INTEGER},
+      card_ID = #{record.cardId,jdbcType=INTEGER},
+      data = #{record.data,jdbcType=DATE},
+      admin_ID = #{record.adminId,jdbcType=INTEGER},
+      record_type = #{record.recordType,jdbcType=VARCHAR}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.book.borrowrecord.bean.BorrowRecord">
+    update p_borrow_record
+    <set>
+      <if test="cardId != null">
+        card_ID = #{cardId,jdbcType=INTEGER},
+      </if>
+      <if test="data != null">
+        data = #{data,jdbcType=DATE},
+      </if>
+      <if test="adminId != null">
+        admin_ID = #{adminId,jdbcType=INTEGER},
+      </if>
+      <if test="recordType != null">
+        record_type = #{recordType,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where Book_ID = #{bookId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.book.borrowrecord.bean.BorrowRecord">
+    update p_borrow_record
+    set card_ID = #{cardId,jdbcType=INTEGER},
+      data = #{data,jdbcType=DATE},
+      admin_ID = #{adminId,jdbcType=INTEGER},
+      record_type = #{recordType,jdbcType=VARCHAR}
+    where Book_ID = #{bookId,jdbcType=INTEGER}
+  </update>
+</mapper>
